@@ -5,9 +5,14 @@ module.exports = {
     return [
       {
         source: '/',
-        destination: '/app/home',
-        permanent: true,
+        destination: '/app/jamns/leaderboard',
+        permanent: false,
       },
+      {
+        source: '/app',
+        destination: '/app/jamns/leaderboard',
+        permanent: false,
+      }
     ]
   },
   pageExtensions: ["page.tsx", 'page.ts', 'api.ts'],
