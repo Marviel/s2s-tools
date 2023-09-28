@@ -1,5 +1,6 @@
 const { resolve } = require("node:path");
 
+console.log("process.cwd()", process.cwd());
 const project = resolve(process.cwd(), "tsconfig.json");
 
 /*

@@ -1,5 +1,5 @@
-import React, { CSSProperties } from 'react';
-
+import type { CSSProperties } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -13,14 +13,14 @@ const centerStyle: CSSProperties = {
   height: '100vh',
 };
 
-const Home = () => {
+function Home() {
   return (
     <Container maxWidth="sm">
       <Box sx={centerStyle}>
-        <Typography variant="h3" component="h1">Welcome to S2S-Helpers</Typography>
+        <Typography component="h1" variant="h3">Welcome to S2S-Helpers</Typography>
       </Box>
     </Container>
   );
-};
+}
 
 export default Home;

@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import SoundCloud from 'soundcloud.ts';
-
 import { basicApiEndpoint } from '../../../_helpers/basicApiEndpoint';
 
 /**
@@ -12,7 +11,7 @@ export const POST = basicApiEndpoint(async (req: Request) => {
     const sc = new SoundCloud();
 
     const usersWithLikes = (await Promise.all(scUserIds.map(async (scUserId) => {
-        let userData = await sc.users.getV2(scUserId)
+        const userData = await sc.users.getV2(scUserId)
         console.log('userData', userData)
 
         if (userData) {
@@ -25,9 +24,9 @@ export const POST = basicApiEndpoint(async (req: Request) => {
                 likes: []
             }
         }
-        else {
+        
             return null;
-        }
+        
     })))
         .filter((x) => x !== null)
 

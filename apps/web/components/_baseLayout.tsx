@@ -2,13 +2,9 @@
 import '../styles/semiglobal.module.css';
 
 import React from 'react';
-
-import {
-  CssBaseline,
-  ThemeProvider,
-} from '@mui/material';
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material";
 import { Analytics } from '@vercel/analytics/react';
-
 import { theme } from '../styles/theme';
 import ClientOnly from './_clientOnly';
 
@@ -57,7 +53,7 @@ class RootErrorBoundary extends React.Component {
             );
         }
 
-        //@ts-ignore
+        //@ts-expect-error
         return this.props.children;
     }
 }
@@ -185,7 +181,7 @@ export function RSNTAppLayout({ children }: any) {
                     <AppProviderWrapper>
                         <UserHandling>
                             <div
-                                id={"RSNT-APP-INNER"}
+                                id="RSNT-APP-INNER"
                                 style={{
                                     position: "absolute",
                                     top: 0,
