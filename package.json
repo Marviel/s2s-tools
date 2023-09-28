@@ -12,7 +12,7 @@
     "tsconfig": "*",
     "turbo": "latest"
   },
-  "name": "soundvoter",
+  "name": "@lukebechtel/s2s-tools",
   "packageManager": "bun@1.0.3",
   "workspaces": [
     "apps/*",

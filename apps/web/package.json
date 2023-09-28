@@ -12,7 +12,13 @@
     "next": "^13.4.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "ui": "*"
+    "ui": "*",
+    "@mui/material": "5.14.11",
+    "@emotion/react": "11.11.1",
+    "@vercel/analytics": "1.0.2",
+    "@emotion/styled": "11.11.0",
+    "@mui/icons-material": "5.14.11",
+    "jsdom": "22.1.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.19",
@@ -21,6 +27,8 @@
     "@types/react-dom": "^18.0.7",
     "eslint-config-custom": "*",
     "tsconfig": "*",
-    "typescript": "^4.5.3"
+    "soundcloud.ts": "0.5.2",
+    "typescript": "^4.5.3",
+    "eslint-plugin-mui-path-imports": "0.0.15"
   }
 }

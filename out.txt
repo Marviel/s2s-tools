@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#333">
+<link rel="stylesheet" href="https://a-v2.sndcdn.com/assets/css/app-d9bce17fb0f4c4525287.css">
+</head>
+<body class="sc-classic">
+
+<div id="app">
+<div role="banner" class="header sc-selection-disabled show fixed g-dark g-z-index-header">
+<div class="header__inner l-container l-fullwidth">
+<div class="header__left left">
+<div class="header__logo left">
+<a href="/" title="Home" class="header__logoLink sc-border-box sc-ir">
+<svg viewBox="0 0 143 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+</svg>
+SoundCloud
+</a>
+</div>
+</div>
+<div id="header__loading" class="sc-hidden"></div>
+</div>
+</div>
+<noscript class="errorPage__inner">
+<div class="errorPage__inner">
+<p class="errorTitle">JavaScript is disabled</p>
+<p class="errorText sc-font-light">You need to enable JavaScript to use SoundCloud</p>
+<div class="errorButtons">
+<a href="http://www.enable-javascript.com/" target="_blank" class="sc-button sc-button-medium">Show me how to enable it</a>
+</div>
+</div>
+</noscript>
+<noscript><article>
+  <header>
+    <h1 itemprop="name"><a itemprop="url" href="/head-lamp/cool-dry-place-headlamp-1">Cool Dry Place (Headlamp Remix)</a>
+by <a href="/head-lamp">Headlamp</a></h1>
+published on <time pubdate>2023-09-11T15:31:24Z</time>
+  </header>
+  <p>
+    <img src="https://i1.sndcdn.com/artworks-haG35gkeNF1ujoPx-KHIsBw-t500x500.jpg" width="" height="" alt="Cool Dry Place (Headlamp Remix)">
+  </p>
+  <section>
+    <h2>Users who liked this track</h2>
+      <article>
+        <h2 itemprop="name"><a itemprop="url" href="/user-660775864">Kirby</a></h2>
+<p></p>
+<p></p>
+<img src="https://i1.sndcdn.com/avatars-WpSqxdOn5TzGPWAb-DYMwuQ-t500x500.jpg" width="" height="" alt="Kirby’s avatar" itemprop="image">
+      </article>
+      <article>
+        <h2 itemprop="name"><a itemprop="url" href="/nathan-winter-800632794">adark presence</a></h2>
+<p></p>
+<p>MA</p>
+<img src="https://i1.sndcdn.com/avatars-TCvTUaAwLA8bEVri-xBShVQ-t500x500.jpg" width="" height="" alt="adark presence’s avatar" itemprop="image">
+      </article>
+  </section>
+  <footer>
+      <ul>
+  <li><a href="/head-lamp/cool-dry-place-headlamp-1/likes">Users who like Cool Dry Place (Headlamp Remix)</a></li>
+  <li><a href="/head-lamp/cool-dry-place-headlamp-1/reposts">Users who reposted Cool Dry Place (Headlamp Remix)</a></li>
+  <li><a href="/head-lamp/cool-dry-place-headlamp-1/sets">Playlists containing Cool Dry Place (Headlamp Remix)</a></li>
+  <li><a href="/head-lamp/cool-dry-place-headlamp-1/recommended">More tracks like Cool Dry Place (Headlamp Remix)</a></li>
+</ul>
+  </footer>
+</article>
+
+</noscript>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+#__next,
+#BODY,
+#APP,
+#RSNT-APP,
+#RSNT-APP-INNER {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.rsn-full-center-container {
+    width: '100%';
+    height: '100%';
+    display: 'flex';
+    flex-direction: 'column';
+    justify-content: 'center';
+    align-items: 'center';
+    justify-items: 'center';
+    align-content: 'center';
+}
