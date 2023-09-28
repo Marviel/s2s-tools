@@ -21,5 +21,10 @@ module.exports = {
       "@typescript-eslint/no-useless-constructor": "warn",
       "@typescript-eslint/ban-ts-comment": "warn",
       "@typescript-eslint/ban-types": "warn",
+      "prefer-const": "warn",
+      "no-var": "warn",
+      "mui-path-imports/mui-path-imports": "warn",
+      "@typescript-eslint/consistent-type-definitions": "warn",
+      "@typescript-eslint/no-confusing-void-expression": "warn",
   }
 };
