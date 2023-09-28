@@ -44,6 +44,135 @@ type PlaylistStub = {
   id?: string,
 }
 
+
+
+
+const S2S_SERVER_MEMBERS: {
+  name?: string,
+  soundCloudPermalink: string,
+  altSoundCloudPermalinks?: string[],
+}[] = [
+  {
+    soundCloudPermalink: 'gridzillah',
+  },
+  {
+    soundCloudPermalink: 'spooqs',
+    altSoundCloudPermalinks: ['chrono-tricker']
+  },
+  {
+    soundCloudPermalink: 'head-lamp',
+    altSoundCloudPermalinks: ['warped-attention'],
+  },
+  {
+    name: 'Clockmangle',
+    soundCloudPermalink: 'clockmangle',
+  },
+  {
+    name: 'Jono En',
+    soundCloudPermalink: 'jono_en',
+  },
+  {
+    name: 'Max Palmer',
+    soundCloudPermalink: 'max-palmer-422097728',
+  },
+  {
+    name: 'Fabvanput',
+    soundCloudPermalink: 'fabvanput',
+  },
+  {
+    name: 'Tempotanglez',
+    soundCloudPermalink: 'tempotanglez',
+  },
+  {
+    name: 'Mount Ocean',
+    soundCloudPermalink: 'mountoceanmusic',
+  },
+  {
+    name: 'David Weddle',
+    soundCloudPermalink: 'david-weddle-662711552',
+  },
+  {
+    name: 'Colin Tilleman',
+    soundCloudPermalink: 'colintilleman',
+  },
+  {
+    name: 'MJP Taque',
+    soundCloudPermalink: 'mjptaque',
+  },
+  {
+    name: 'Tantal Twister',
+    soundCloudPermalink: 'tantal_twister',
+  },
+  {
+    name: 'PJ4533',
+    soundCloudPermalink: 'pj4533',
+  },
+  {
+    name: 'Tom Parson',
+    soundCloudPermalink: 'tomparson',
+  },
+  {
+    name: 'Federico Silva Ponte',
+    soundCloudPermalink: 'federico-silva-ponte',
+  },
+  {
+    name: 'Yohgi-39138242',
+    soundCloudPermalink: 'yohgi-39138242',
+  },
+  {
+    name: 'Godsine',
+    soundCloudPermalink: 'godsine',
+  },
+  {
+    name: 'Tempo M Tat',
+    soundCloudPermalink: 'tempo-m-tat',
+  },
+  {
+    name: 'Josip Antevulic SC2',
+    soundCloudPermalink: 'josipantevulic-sc2',
+  },
+  {
+    name: 'Techy White',
+    soundCloudPermalink: 'techywhite',
+  },
+  {
+    name: 'Miami Milkshake',
+    soundCloudPermalink: 'miamimilkshake',
+  },
+  {
+    name: 'Billy Pilgrim Fluxin',
+    soundCloudPermalink: 'billy_pilgrim_fluxin',
+  },
+  {
+    name: 'Mike A 71386919',
+    soundCloudPermalink: 'mike-a-71386919',
+  },
+  {
+    name: 'Eruditex',
+    soundCloudPermalink: 'eruditex',
+  },
+  {
+    name: 'User 989753770',
+    soundCloudPermalink: 'user-989753770',
+  },
+  {
+    name: 'Tempo Shlempo',
+    soundCloudPermalink: 'tempo-shlempo',
+  },
+  {
+    name: 'Sonic Celebration',
+    soundCloudPermalink: 'sonic-celebration',
+  },
+  {
+    name: 'Gibsong Music',
+    soundCloudPermalink: 'gibsongmusic',
+  },
+  {
+    name: 'Drew Willard',
+    soundCloudPermalink: 'drewwillard',
+  }
+]
+
 const DEFAULT_PLAYLISTS: PlaylistStub[] = [
   {
     label: 'Fluxjamns 2023 Day 1',
@@ -66,7 +195,7 @@ const App: React.FC = () => {
     full: allTrackLikes,
     setter: setAllTrackLikes,
   } = useStateStatus<{trackId: number, userIds: string[]}[]>();
-  const [sortStrategy, setSortStrategy] = useState<'likes' | 'likes-by-artists'>('likes-by-artists');
+  const [sortStrategy, setSortStrategy] = useState<'likes' | 'likes-by-artists'| 'likes-by-s2s-members'>('likes-by-s2s-members');
 
   const handleChange = (event) => {
     setPlaylistUrl(event.target.value);
@@ -126,7 +255,6 @@ const App: React.FC = () => {
     }
   }, [playlist])
 
-
   const artistsInPlaylist = playlist?.data?.tracks.map((t) => t.user.permalink.toString());
 
   // Likes by people who also had a track in the playlist.
@@ -148,6 +276,26 @@ const App: React.FC = () => {
     status: allTrackLikes.status
   }
 
+  const likesByS2SMembers = allTrackLikes.status === 'done' ? {
+    status: 'done',
+    data: allTrackLikes.data.map((curr) => {
+      // Check if any of the userIds are in the S2S server members list
+      // Either their main account or their alts.
+      const thisTrackLikesByS2SMembers = curr.userIds.filter((userId) => S2S_SERVER_MEMBERS.find((m) => m.soundCloudPermalink === userId || m.altSoundCloudPermalinks?.find((a) => a === userId)));
+
+      return {
+        trackId: curr.trackId,
+        // Remove any userIds that don't have a track in the playlist
+        userIds: thisTrackLikesByS2SMembers,
+        numLikes: thisTrackLikesByS2SMembers.length,
+      };
+    })
+  }
+  :
+  {
+    status: allTrackLikes.status
+  }
+
   const tracksOrdered = playlist?.data?.tracks.sort((a, b) => {
     if (sortStrategy === 'likes'){
       return b.likes_count - a.likes_count;
@@ -158,6 +306,17 @@ const App: React.FC = () => {
       else {
         const aLikes = likesByArtistsInPlaylist.data.find((t) => t.trackId === a.id)?.numLikes || -1;
         const bLikes = likesByArtistsInPlaylist.data.find((t) => t.trackId === b.id)?.numLikes || -1;
+
+        return bLikes - aLikes;
+      }
+    }
+    else if (sortStrategy === 'likes-by-s2s-members'){
+      if (likesByS2SMembers.status !== 'done'){
+        return 0;
+      }
+      else {
+        const aLikes = likesByS2SMembers.data.find((t) => t.trackId === a.id)?.numLikes || -1;
+        const bLikes = likesByS2SMembers.data.find((t) => t.trackId === b.id)?.numLikes || -1;
 
         return bLikes - aLikes;
       }
@@ -213,6 +372,7 @@ const App: React.FC = () => {
               >
                 <FormControlLabel value="likes" control={<Radio />} label="Likes" />
                 <FormControlLabel value="likes-by-artists" control={<Radio />} label="Likes by Playlist Artists" />
+                <FormControlLabel value="likes-by-s2s-members" control={<Radio />} label="Likes by S2S Members" />
               </RadioGroup>
             </Stack>
           </FormControl>
@@ -252,6 +412,18 @@ const App: React.FC = () => {
                                 const numLikes = likesByArtistsInPlaylist.data.find((t) => t.trackId === track.id)?.numLikes
 
                                 return numLikes === undefined ? null : <Typography variant='body2'>Likes by Playlist Artists: {numLikes}</Typography>
+                              }
+                            })()
+                          }
+                          {
+                            (() => {
+                              if (likesByS2SMembers.status !== 'done'){
+                                return null;
+                              }
+                              else {
+                                const numLikes = likesByS2SMembers.data.find((t) => t.trackId === track.id)?.numLikes
+
+                                return numLikes === undefined ? null : <Typography variant='body2'>Likes by S2S Members: {numLikes}</Typography>
                               }
                             })()
                           }
