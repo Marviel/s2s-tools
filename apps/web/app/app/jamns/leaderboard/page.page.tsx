@@ -1,5 +1,8 @@
 "use client"
-import React, { useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
 import { SoundcloudPlaylistV2 } from 'soundcloud.ts';
 
@@ -185,6 +188,9 @@ const DEFAULT_PLAYLISTS: PlaylistStub[] = [
 ]
 
 const App: React.FC = () => {
+  useEffect(() => {
+    document.title = '🍓 Jamn Leaderboard';
+  }, []);
   const [playlistUrl, setPlaylistUrl] = useState<string>(DEFAULT_PLAYLISTS[0].url);
   const {
     full: playlist,
@@ -359,79 +365,84 @@ const App: React.FC = () => {
                 </Stack>
             </form>
         </Card>
-        <Paper>
-          <FormControl>
-            <Stack direction={'row'} spacing={2} sx={{padding: '10px'}}>
-              <FormLabel id="demo-controlled-radio-buttons-group"><Typography>Sort</Typography></FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={sortStrategy}
-                row
-                onChange={(e) => setSortStrategy(e.target.value as any)}
-              >
-                <FormControlLabel value="likes" control={<Radio />} label="Likes" />
-                <FormControlLabel value="likes-by-artists" control={<Radio />} label="Likes by Playlist Artists" />
-                <FormControlLabel value="likes-by-s2s-members" control={<Radio />} label="Likes by S2S Members" />
-              </RadioGroup>
-            </Stack>
-          </FormControl>
-          <Grid container spacing={3} padding={2} justifyItems={'center'} alignItems={'center'} alignContent={'center'} justifyContent={'center'}>
-            {
-              playlist?.status === 'fetching' ? <CircularProgress /> : null
-            }
+        <Paper sx={{padding: '15px'}}>
+          <Stack gap={2}>
+            <Typography variant="h5" fontWeight={800} textAlign={'left'}>
+              {playlist?.data?.title}
+            </Typography>
+            <FormControl>
+              <Stack direction={'row'} spacing={2} sx={{padding: '10px'}} alignItems={'center'}>
+                <FormLabel id="demo-controlled-radio-buttons-group"><Typography>Sort</Typography></FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  value={sortStrategy}
+                  row
+                  onChange={(e) => setSortStrategy(e.target.value as any)}
+                >
+                  <FormControlLabel value="likes" control={<Radio />} label="Likes" />
+                  <FormControlLabel value="likes-by-artists" control={<Radio />} label="Likes by Playlist Artists" />
+                  <FormControlLabel value="likes-by-s2s-members" control={<Radio />} label="Likes by S2S Members" />
+                </RadioGroup>
+              </Stack>
+            </FormControl>
+            <Grid container spacing={3} padding={2} justifyItems={'center'} alignItems={'center'} alignContent={'center'} justifyContent={'center'}>
+              {
+                playlist?.status === 'fetching' ? <CircularProgress /> : null
+              }
 
-              {tracksOrdered?.map(track => (
-                  <Grid key={track.id} item>
-                    <a href={track.permalink_url} >
-                      <Card elevation={10} sx={{
-                          padding: '10px', 
-                          ':hover': {backgroundColor: '#eeeeee', borderShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)', transform: 'scale(1.02)'},
-                          height: '100%',
-                          width: '200px',
-                      }}>
-                          <Typography variant="body1" sx={{
-                              overflow: 'hidden',
-                              textOverflow: 'ellipsis',
-                              display: '-webkit-box',
-                              WebkitLineClamp: '1',
-                              WebkitBoxOrient: 'vertical',
-                          }}>
-                            {track.title}
-                          </Typography>
-                          <Typography variant="body2">By {track.user.username}</Typography>
-                          <img src={track.artwork_url ? track.artwork_url : track.user.avatar_url} alt={track.title}  width={'100%'} height={'fit-content'}/>
-                            
-                          <Typography variant='body2'>Likes: {track.likes_count}</Typography>
-                          {
-                            (() => {
-                              if (likesByArtistsInPlaylist.status !== 'done'){
-                                return null;
-                              }
-                              else {
-                                const numLikes = likesByArtistsInPlaylist.data.find((t) => t.trackId === track.id)?.numLikes
+                {tracksOrdered?.map(track => (
+                    <Grid key={track.id} item>
+                      <a href={track.permalink_url} >
+                        <Card elevation={10} sx={{
+                            padding: '10px', 
+                            ':hover': {backgroundColor: '#eeeeee', borderShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)', transform: 'scale(1.02)'},
+                            height: '100%',
+                            width: '200px',
+                        }}>
+                            <Typography variant="body1" sx={{
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                display: '-webkit-box',
+                                WebkitLineClamp: '1',
+                                WebkitBoxOrient: 'vertical',
+                            }}>
+                              {track.title}
+                            </Typography>
+                            <Typography variant="body2">By {track.user.username}</Typography>
+                            <img src={track.artwork_url ? track.artwork_url : track.user.avatar_url} alt={track.title}  width={'100%'} height={'fit-content'}/>
+                              
+                            <Typography variant='body2'>Likes: {track.likes_count}</Typography>
+                            {
+                              (() => {
+                                if (likesByArtistsInPlaylist.status !== 'done'){
+                                  return null;
+                                }
+                                else {
+                                  const numLikes = likesByArtistsInPlaylist.data.find((t) => t.trackId === track.id)?.numLikes
 
-                                return numLikes === undefined ? null : <Typography variant='body2'>Likes by Playlist Artists: {numLikes}</Typography>
-                              }
-                            })()
-                          }
-                          {
-                            (() => {
-                              if (likesByS2SMembers.status !== 'done'){
-                                return null;
-                              }
-                              else {
-                                const numLikes = likesByS2SMembers.data.find((t) => t.trackId === track.id)?.numLikes
+                                  return numLikes === undefined ? null : <Typography variant='body2'>Likes by Playlist Artists: {numLikes}</Typography>
+                                }
+                              })()
+                            }
+                            {
+                              (() => {
+                                if (likesByS2SMembers.status !== 'done'){
+                                  return null;
+                                }
+                                else {
+                                  const numLikes = likesByS2SMembers.data.find((t) => t.trackId === track.id)?.numLikes
 
-                                return numLikes === undefined ? null : <Typography variant='body2'>Likes by S2S Members: {numLikes}</Typography>
-                              }
-                            })()
-                          }
-                      </Card>
-                      </a>
-                  </Grid>
-              ))}
-          </Grid>
+                                  return numLikes === undefined ? null : <Typography variant='body2'>Likes by S2S Members: {numLikes}</Typography>
+                                }
+                              })()
+                            }
+                        </Card>
+                        </a>
+                    </Grid>
+                ))}
+            </Grid>
+          </Stack>
         </Paper>
     </Stack>
   );
